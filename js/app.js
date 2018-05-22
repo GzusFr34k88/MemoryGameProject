@@ -1,23 +1,23 @@
 /*
  * Create a list that holds all of your cards
  */
-let diamond = "<li class=\"card\" \n> <i class=\"fa fa-diamond\"> \n </li>";
-const plane = "<li class=\"card\"> \n <i class=\"fa fa-paper-plane-o\"> \n </li>";
-const anchor = "<li class=\"card\"> \n <i class=\"fa fa-anchor\"> \n </li>";
-const bolt = "<li class=\"card\"> \n <i class=\"fa fa-bolt\"> \n </li>";
-const cube = "<li class=\"card\"> \n <i class=\"fa fa-cube\"> \n </li>";
-const leaf = "<li class=\"card\"> \n <i class=\"fa fa-leaf\"> \n </li>";
-const bicycle = "<li class=\"card\"> \n <i class=\"fa fa-bicycle\"> \n </li>";
-const bomb = "<li class=\"card\"> \n <i class=\"fa fa-bomb\"> \n </li>";
+const diamond = "<li class=\"card\" \n>   <i class=\"fa fa-diamond\">\n</li>\n";
+const plane = "<li class=\"card\"> \n   <i class=\"fa fa-paper-plane-o\">\n</li>\n";
+const anchor = "<li class=\"card\"> \n   <i class=\"fa fa-anchor\">\n</li>\n";
+const bolt = "<li class=\"card\"> \n   <i class=\"fa fa-bolt\"> \n</li>\n";
+const cube = "<li class=\"card\"> \n   <i class=\"fa fa-cube\"> \n</li>\n";
+const leaf = "<li class=\"card\"> \n   <i class=\"fa fa-leaf\"> \n</li>\n";
+const bicycle = "<li class=\"card\"> \n   <i class=\"fa fa-bicycle\">\n</li>\n";
+const bomb = "<li class=\"card\"> \n   <i class=\"fa fa-bomb\"> \n</li>\n";
 let deckStructure = [diamond, plane, anchor, bolt, cube, leaf, bicycle, bomb];
 const deck = document.getElementsByClassName('deck');
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-deckStructure = shuffle(deckStructure);
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -32,6 +32,20 @@ function shuffle(array) {
     }
 
     return array;
+}
+
+reset();
+function reset() {
+    deckStructure = shuffle(deckStructure);
+    deckStructure += shuffle(deckStructure);
+    while (deck[0].firstChild) {
+        deck[0].firstChild.remove();
+    }
+    let newList = "";
+    for (let i = 0; i < deckStructure.length; i++) {
+        newList += deckStructure[i];
+    }
+    console.log(newList);
 }
 
 /*
