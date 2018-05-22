@@ -1,15 +1,16 @@
 /*
  * Create a list that holds all of your cards
  */
-const diamond = "<li class=\"card\" \n>   <i class=\"fa fa-diamond\">\n</li>\n";
-const plane = "<li class=\"card\"> \n   <i class=\"fa fa-paper-plane-o\">\n</li>\n";
-const anchor = "<li class=\"card\"> \n   <i class=\"fa fa-anchor\">\n</li>\n";
-const bolt = "<li class=\"card\"> \n   <i class=\"fa fa-bolt\"> \n</li>\n";
-const cube = "<li class=\"card\"> \n   <i class=\"fa fa-cube\"> \n</li>\n";
-const leaf = "<li class=\"card\"> \n   <i class=\"fa fa-leaf\"> \n</li>\n";
-const bicycle = "<li class=\"card\"> \n   <i class=\"fa fa-bicycle\">\n</li>\n";
-const bomb = "<li class=\"card\"> \n   <i class=\"fa fa-bomb\"> \n</li>\n";
-let deckStructure = [diamond, plane, anchor, bolt, cube, leaf, bicycle, bomb];
+const diamond = "fa fa-diamond";
+const plane = "fa fa-paper-plane-o";
+const anchor = "fa fa-anchor";
+const bolt = "fa fa-bolt";
+const cube = "fa fa-cube";
+const leaf = "fa fa-leaf";
+const bicycle = "fa fa-bicycle";
+const bomb = "fa fa-bomb";
+let deckStructure = [diamond, plane, anchor, bolt, cube, leaf, bicycle, bomb,
+    diamond, plane, anchor, bolt, cube, leaf, bicycle, bomb];
 const deck = document.getElementsByClassName('deck');
 
 /*
@@ -37,15 +38,18 @@ function shuffle(array) {
 reset();
 function reset() {
     deckStructure = shuffle(deckStructure);
-    deckStructure += shuffle(deckStructure);
-    while (deck[0].firstChild) {
-        deck[0].firstChild.remove();
-    }
-    let newList = "";
+    deck[0].remove(deck[0]);
+    let newDeck = document.createElement('ul');
     for (let i = 0; i < deckStructure.length; i++) {
-        newList += deckStructure[i];
+        let newList = document.createElement('li');
+        let innerList = document.createElement('i');
+        innerList.className = deckStructure[i];
+        newList.appendChild(innerList);
+        newDeck.appendChild(newList);
     }
-    console.log(newList);
+    newDeck.className = "deck";
+    let container = document.getElementsByClassName('containter');
+    container.insertAdjacentHTML("beforeend", '<ul class="deck"><ul>');
 }
 
 /*
