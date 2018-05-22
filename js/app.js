@@ -1,26 +1,24 @@
 /*
  * Create a list that holds all of your cards
  */
-const diamond = document.getElementsByClassName('fa-diamond');
-const plane = document.getElementsByClassName('fa-paper-plane-o');
-const anchor = document.getElementsByClassName('fa-anchor');
-const bolt = document.getElementsByClassName('fa-bolt');
-const cube = document.getElementsByClassName('fa-cube');
-const leaf = document.getElementsByClassName('fa-leaf');
-const bicycle = document.getElementsByClassName('fa-bicycle');
-const bomb = document.getElementsByClassName('fa-bomb');
+let diamond = "<li class=\"card\" \n> <i class=\"fa fa-diamond\"> \n </li>";
+const plane = "<li class=\"card\"> \n <i class=\"fa fa-paper-plane-o\"> \n </li>";
+const anchor = "<li class=\"card\"> \n <i class=\"fa fa-anchor\"> \n </li>";
+const bolt = "<li class=\"card\"> \n <i class=\"fa fa-bolt\"> \n </li>";
+const cube = "<li class=\"card\"> \n <i class=\"fa fa-cube\"> \n </li>";
+const leaf = "<li class=\"card\"> \n <i class=\"fa fa-leaf\"> \n </li>";
+const bicycle = "<li class=\"card\"> \n <i class=\"fa fa-bicycle\"> \n </li>";
+const bomb = "<li class=\"card\"> \n <i class=\"fa fa-bomb\"> \n </li>";
 let deckStructure = [diamond, plane, anchor, bolt, cube, leaf, bicycle, bomb];
 const deck = document.getElementsByClassName('deck');
-const cards = document.getElementsByTagName('li');
-
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-shuffle(deckStructure);
-reset();
+deckStructure = shuffle(deckStructure);
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -34,15 +32,6 @@ function shuffle(array) {
     }
 
     return array;
-}
-
-function reset() {
-    console.log(deck);
-    while (deck.firstChild){
-        deck.removeChild(cards);
-        console.log(deck);
-    }
-    console.log(deck.cards);
 }
 
 /*
