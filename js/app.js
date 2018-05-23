@@ -39,17 +39,20 @@ reset();
 function reset() {
     deckStructure = shuffle(deckStructure);
     deck[0].remove(deck[0]);
+    let temp = document.createDocumentFragment();
     let newDeck = document.createElement('ul');
     for (let i = 0; i < deckStructure.length; i++) {
         let newList = document.createElement('li');
         let innerList = document.createElement('i');
+        newList.className = 'card';
         innerList.className = deckStructure[i];
         newList.appendChild(innerList);
         newDeck.appendChild(newList);
     }
     newDeck.className = "deck";
-    let container = document.getElementsByClassName('containter');
-    container.insertAdjacentHTML("beforeend", '<ul class="deck"><ul>');
+    temp.appendChild(newDeck);
+    let container = document.querySelector('.container');
+    container.appendChild(temp);
 }
 
 /*
