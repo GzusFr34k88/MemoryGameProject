@@ -1,17 +1,19 @@
 /*
  * Create a list that holds all of your cards
  */
-const diamond = "fa fa-diamond";
-const plane = "fa fa-paper-plane-o";
-const anchor = "fa fa-anchor";
-const bolt = "fa fa-bolt";
-const cube = "fa fa-cube";
-const leaf = "fa fa-leaf";
-const bicycle = "fa fa-bicycle";
-const bomb = "fa fa-bomb";
-let deckStructure = [diamond, plane, anchor, bolt, cube, leaf, bicycle, bomb,
-    diamond, plane, anchor, bolt, cube, leaf, bicycle, bomb];
+const diamond = document.getElementsByClassName("fa-diamond");
+const plane = document.getElementsByClassName("fa-paper-plane-o");
+const anchor = document.getElementsByClassName("fa-anchor");
+const bolt = document.getElementsByClassName("fa-bolt");
+const cube = document.getElementsByClassName("fa-cube");
+const leaf = document.getElementsByClassName("fa-leaf");
+const bicycle = document.getElementsByClassName("fa-bicycle");
+const bomb = document.getElementsByClassName("fa-bomb");
+let deckStructure = ["fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-bolt",
+    "fa fa-cube", "fa fa-leaf", "fa fa-bicycle", "fa fa-bomb", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-bolt",
+    "fa fa-cube", "fa fa-leaf", "fa fa-bicycle", "fa fa-bomb"];
 const deck = document.getElementsByClassName('deck');
+const restart = document.getElementsByClassName('restart');
 
 /*
  * Display the cards on the page
@@ -39,11 +41,11 @@ reset();
 function reset() {
     deckStructure = shuffle(deckStructure);
     deck[0].remove(deck[0]);
-    let temp = document.createDocumentFragment();
-    let newDeck = document.createElement('ul');
+    const temp = document.createDocumentFragment();
+    const newDeck = document.createElement('ul');
     for (let i = 0; i < deckStructure.length; i++) {
-        let newList = document.createElement('li');
-        let innerList = document.createElement('i');
+        const newList = document.createElement('li');
+        const innerList = document.createElement('i');
         newList.className = 'card';
         innerList.className = deckStructure[i];
         newList.appendChild(innerList);
@@ -51,8 +53,53 @@ function reset() {
     }
     newDeck.className = "deck";
     temp.appendChild(newDeck);
-    let container = document.querySelector('.container');
+    const container = document.querySelector('.container');
     container.appendChild(temp);
+}
+
+let counter = 0;
+let prevCard;
+function flipCard(evt) {
+    counter++;
+    const thisCard = evt.target;
+    if (thisCard.nodeName === 'LI'){
+        if(!thisCard.className.includes('match')) {
+            checkCard(thisCard);
+        }
+    }
+}
+let flippedCards = [];
+function checkCard(evt) {
+    console.log('click');
+    if (evt.nodeName === 'LI'){
+        if (counter < 2) {
+            console.log(counter);
+            evt.className = "card open show";
+            flippedCards.push(evt);
+            console.log(flippedCards);
+        }
+        if (counter === 2) {
+            const prevCard = flippedCards[0];
+            if (prevCard !== evt && (prevCard.querySelector('i').className === evt.querySelector('i').className)) {
+                flippedCards.push(evt);
+                flippedCards[0].className = "card match";
+                flippedCards[1].className = "card match";
+                flippedCards = [];
+                counter = 0;
+            }
+            else if (prevCard !== evt && (prevCard.querySelector('i').className !== evt.querySelector('i').className)) {
+                flippedCards.push(evt);
+                flippedCards[0].className = "card show mismatch";
+                flippedCards[1].className = "card show mismatch";
+                setTimeout(function () {
+                    flippedCards[0].className = "card"
+                    flippedCards[1].className = "card"
+                    flippedCards = [];
+                    counter = 0;
+                }, 1000);
+            }
+        }
+    }
 }
 
 /*
@@ -65,3 +112,5 @@ function reset() {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+deck[0].addEventListener('click', flipCard);
+restart[0].addEventListener('click', reset);
