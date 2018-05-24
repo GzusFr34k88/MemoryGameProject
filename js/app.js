@@ -14,6 +14,7 @@ let deckStructure = ["fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa
     "fa fa-cube", "fa fa-leaf", "fa fa-bicycle", "fa fa-bomb"];
 const deck = document.querySelector('.deck');
 const restart = document.querySelector('.restart');
+const stars = document.querySelector('.fa-stars');
 const moves = document.querySelector('.moves');
 let counter = 0;
 let flippedCards = [];
@@ -96,6 +97,7 @@ function checkCard(evt) {
             else if (prevCard !== evt && (prevCard.querySelector('i').className !== evt.querySelector('i').className)) {
                 flippedCards.push(evt);
                 moveNumbers();
+                stats();
                 flippedCards[0].className = "card show mismatch";
                 flippedCards[1].className = "card show mismatch";
                 setTimeout(function () {
@@ -114,6 +116,14 @@ function moveNumbers() {
     moves.textContent = moveCounter;
 }
 
+function stats() {
+    if (moveCounter === 10) {
+        document.querySelector('#star-3').className = "fa fa-star-o";
+    }
+    if (moveCounter === 15) {
+        document.querySelector('#star-2').className = "fa fa-star-o";
+    }
+}
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
