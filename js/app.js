@@ -1,19 +1,19 @@
 /*
  * Create a list that holds all of your cards
  */
-const diamond = document.getElementsByClassName("fa-diamond");
-const plane = document.getElementsByClassName("fa-paper-plane-o");
-const anchor = document.getElementsByClassName("fa-anchor");
-const bolt = document.getElementsByClassName("fa-bolt");
-const cube = document.getElementsByClassName("fa-cube");
-const leaf = document.getElementsByClassName("fa-leaf");
-const bicycle = document.getElementsByClassName("fa-bicycle");
-const bomb = document.getElementsByClassName("fa-bomb");
+const diamond = document.querySelector(".fa-diamond");
+const plane = document.querySelector(".fa-paper-plane-o");
+const anchor = document.querySelector(".fa-anchor");
+const bolt = document.querySelector(".fa-bolt");
+const cube = document.querySelector(".fa-cube");
+const leaf = document.querySelector(".fa-leaf");
+const bicycle = document.querySelector(".fa-bicycle");
+const bomb = document.querySelector(".fa-bomb");
 let deckStructure = ["fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-bolt",
     "fa fa-cube", "fa fa-leaf", "fa fa-bicycle", "fa fa-bomb", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-bolt",
     "fa fa-cube", "fa fa-leaf", "fa fa-bicycle", "fa fa-bomb"];
-const deck = document.getElementsByClassName('deck');
-const restart = document.getElementsByClassName('restart');
+const deck = document.querySelector('.deck');
+const restart = document.querySelector('.restart');
 
 /*
  * Display the cards on the page
@@ -39,22 +39,24 @@ function shuffle(array) {
 
 reset();
 function reset() {
+    console.log(deck.firstChild);
+    if (deck.firstChild){
+        while (deck.firstChild) {
+            deck.removeChild(deck.firstChild);
+        }
+    }
     deckStructure = shuffle(deckStructure);
-    deck[0].remove(deck[0]);
     const temp = document.createDocumentFragment();
-    const newDeck = document.createElement('ul');
     for (let i = 0; i < deckStructure.length; i++) {
         const newList = document.createElement('li');
         const innerList = document.createElement('i');
         newList.className = 'card';
         innerList.className = deckStructure[i];
         newList.appendChild(innerList);
-        newDeck.appendChild(newList);
+        temp.appendChild(newList);
     }
-    newDeck.className = "deck";
-    temp.appendChild(newDeck);
-    const container = document.querySelector('.container');
-    container.appendChild(temp);
+    deck.appendChild(temp);
+    console.log(deck);
 }
 
 let counter = 0;
@@ -112,5 +114,5 @@ function checkCard(evt) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-deck[0].addEventListener('click', flipCard);
-restart[0].addEventListener('click', reset);
+deck.addEventListener('click', flipCard), false;
+restart.addEventListener('click', reset), false;
