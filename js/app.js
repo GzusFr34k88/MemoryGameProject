@@ -14,6 +14,9 @@ let deckStructure = ["fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa
     "fa fa-cube", "fa fa-leaf", "fa fa-bicycle", "fa fa-bomb"];
 const deck = document.querySelector('.deck');
 const restart = document.querySelector('.restart');
+const moves = document.querySelector('.moves');
+let counter = 0;
+let flippedCards = [];
 
 /*
  * Display the cards on the page
@@ -39,11 +42,12 @@ function shuffle(array) {
 
 reset();
 function reset() {
-    console.log(deck.firstChild);
-    if (deck.firstChild){
-        while (deck.firstChild) {
-            deck.removeChild(deck.firstChild);
-        }
+    counter = 0;
+    moveCounter = 0;
+    moves.textContent = 0;
+    flippedCards = [];
+    while (deck.firstChild) {
+        deck.removeChild(deck.firstChild);
     }
     deckStructure = shuffle(deckStructure);
     const temp = document.createDocumentFragment();
@@ -59,18 +63,18 @@ function reset() {
     console.log(deck);
 }
 
-let counter = 0;
+
 let prevCard;
 function flipCard(evt) {
-    counter++;
+    console.log(counter);
     const thisCard = evt.target;
     if (thisCard.nodeName === 'LI'){
+        counter++;
         if(!thisCard.className.includes('match')) {
             checkCard(thisCard);
         }
     }
 }
-let flippedCards = [];
 function checkCard(evt) {
     console.log('click');
     if (evt.nodeName === 'LI'){
@@ -91,6 +95,7 @@ function checkCard(evt) {
             }
             else if (prevCard !== evt && (prevCard.querySelector('i').className !== evt.querySelector('i').className)) {
                 flippedCards.push(evt);
+                moveNumbers();
                 flippedCards[0].className = "card show mismatch";
                 flippedCards[1].className = "card show mismatch";
                 setTimeout(function () {
@@ -98,10 +103,15 @@ function checkCard(evt) {
                     flippedCards[1].className = "card"
                     flippedCards = [];
                     counter = 0;
-                }, 1000);
+                }, 800);
             }
         }
     }
+}
+moveCounter = 0;
+function moveNumbers() {
+    moveCounter++;
+    moves.textContent = moveCounter;
 }
 
 /*
