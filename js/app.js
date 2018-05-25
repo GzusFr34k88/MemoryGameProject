@@ -16,8 +16,11 @@ const deck = document.querySelector('.deck');
 const restart = document.querySelector('.restart');
 const stars = document.querySelector('.fa-stars');
 const moves = document.querySelector('.moves');
+const scoreEl = document.querySelector('.score');
+let score = 10000;
 let counter = 0;
 let flippedCards = [];
+let scoreActive = false;
 
 /*
  * Display the cards on the page
@@ -46,6 +49,9 @@ function reset() {
     counter = 0;
     moveCounter = 0;
     moves.textContent = 0;
+    scoreEl.textContent = 10000;
+    document.querySelector('#star-3').className = 'fa fa-star';
+    document.querySelector('#star-2').className = 'fa fa-star';
     flippedCards = [];
     while (deck.firstChild) {
         deck.removeChild(deck.firstChild);
@@ -67,7 +73,10 @@ function reset() {
 
 let prevCard;
 function flipCard(evt) {
-    console.log(counter);
+    if (!scoreActive) {
+        scoreActive = true;
+        scoringSystem();
+    }
     const thisCard = evt.target;
     if (thisCard.nodeName === 'LI'){
         counter++;
@@ -123,6 +132,15 @@ function stats() {
     if (moveCounter === 15) {
         document.querySelector('#star-2').className = "fa fa-star-o";
     }
+}
+
+function scoringSystem() {
+    setInterval(function() {
+        if (score > 0) {
+            score -= 50;
+        }
+        scoreEl.textContent = score;
+    }, 1000)
 }
 /*
  * set up the event listener for a card. If a card is clicked:
