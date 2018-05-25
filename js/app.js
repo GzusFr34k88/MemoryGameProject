@@ -21,6 +21,7 @@ let score = 10000;
 let counter = 0;
 let flippedCards = [];
 let scoreActive = false;
+let matchedCounter = 0;
 
 /*
  * Display the cards on the page
@@ -102,6 +103,7 @@ function checkCard(evt) {
                 flippedCards[1].className = "card match";
                 flippedCards = [];
                 counter = 0;
+                matchedCounter++;
             }
             else if (prevCard !== evt && (prevCard.querySelector('i').className !== evt.querySelector('i').className)) {
                 flippedCards.push(evt);
@@ -135,11 +137,14 @@ function stats() {
 }
 
 function scoringSystem() {
-    setInterval(function() {
+    var startScoring = setInterval(function() {
         if (score > 0) {
             score -= 50;
         }
         scoreEl.textContent = score;
+        if (matchedCounter === 8) {
+            clearInterval(startScoring);
+        }
     }, 1000)
 }
 /*
