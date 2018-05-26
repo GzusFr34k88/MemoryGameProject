@@ -1,14 +1,6 @@
 /*
  * Create a list that holds all of your cards
  */
-const diamond = document.querySelector(".fa-diamond");
-const plane = document.querySelector(".fa-paper-plane-o");
-const anchor = document.querySelector(".fa-anchor");
-const bolt = document.querySelector(".fa-bolt");
-const cube = document.querySelector(".fa-cube");
-const leaf = document.querySelector(".fa-leaf");
-const bicycle = document.querySelector(".fa-bicycle");
-const bomb = document.querySelector(".fa-bomb");
 let deckStructure = ["fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-bolt",
     "fa fa-cube", "fa fa-leaf", "fa fa-bicycle", "fa fa-bomb", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-bolt",
     "fa fa-cube", "fa fa-leaf", "fa fa-bicycle", "fa fa-bomb"];
@@ -23,6 +15,7 @@ let flippedCards = [];
 let scoreActive = false;
 let matchedCounter = 0;
 let currentStars = 3;
+let moveCounter = 0;
 
 /*
  * Display the cards on the page
@@ -52,6 +45,10 @@ function reset() {
     moveCounter = 0;
     moves.textContent = 0;
     scoreEl.textContent = 10000;
+    score = 10000;
+    scoreActive = false;
+    matchedCounter = 0;
+    currentStars = 3;
     document.querySelector('#star-3').className = 'fa fa-star';
     document.querySelector('#star-2').className = 'fa fa-star';
     flippedCards = [];
@@ -69,36 +66,33 @@ function reset() {
         temp.appendChild(newList);
     }
     deck.appendChild(temp);
-    console.log(deck);
 }
 
-
-let prevCard;
 function flipCard(evt) {
-    if (!scoreActive) {
-        scoreActive = true;
-        scoringSystem();
-    }
     const thisCard = evt.target;
     if (thisCard.nodeName === 'LI'){
+            if (!scoreActive) {
+                scoreActive = true;
+                scoringSystem();
+            }
         counter++;
         if(!thisCard.className.includes('match')) {
             checkCard(thisCard);
         }
     }
 }
+
 function checkCard(evt) {
-    console.log('click');
     if (evt.nodeName === 'LI'){
         if (counter < 2) {
-            console.log(counter);
             evt.className = "card open show";
             flippedCards.push(evt);
-            console.log(flippedCards);
         }
         if (counter === 2) {
             const prevCard = flippedCards[0];
             if (prevCard !== evt && (prevCard.querySelector('i').className === evt.querySelector('i').className)) {
+                moveNumbers();
+                stats();
                 flippedCards.push(evt);
                 flippedCards[0].className = "card match";
                 flippedCards[1].className = "card match";
@@ -122,7 +116,6 @@ function checkCard(evt) {
         }
     }
 }
-moveCounter = 0;
 function moveNumbers() {
     moveCounter++;
     moves.textContent = moveCounter;
@@ -141,19 +134,24 @@ function stats() {
 
 function scoringSystem() {
     var startScoring = setInterval(function() {
-        if (score > 0) {
+        if (score > 0 && scoreActive) {
             score -= 50;
         }
         scoreEl.textContent = score;
+        if (!scoreActive) {
+            clearInterval(startScoring);
+        }
         if (matchedCounter === 8) {
             clearInterval(startScoring);
             if(currentStars > 1) {
-                alert("You won with " + moveCounter + " moves! You got " + currentStars + " stars and scored " + score + " points!");
-                document.location.reload();
+                if (window.confirm("You won with " + moveCounter + " moves! You got " + currentStars + " stars and scored " + score + " points! Press Ok if you want to play again.")) {
+                    reset();
+                }
             }
             else {
-                alert("You won with " + moveCounter + " moves! You got " + currentStars + " star and scored " + score + " points!");
-                document.location.reload();
+                if (window.confirm("You won with " + moveCounter + " moves! You got " + currentStars + " star and scored " + score + " points! Press Ok if you want to play again.")){
+                    reset();
+                }
             }
         }
     }, 1000)
@@ -168,5 +166,5 @@ function scoringSystem() {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-deck.addEventListener('click', flipCard), false;
-restart.addEventListener('click', reset), false;
+deck.addEventListener('click', flipCard, false);
+restart.addEventListener('click', reset, false);
