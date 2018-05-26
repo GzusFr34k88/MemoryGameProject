@@ -6,7 +6,6 @@ let deckStructure = ["fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa
     "fa fa-cube", "fa fa-leaf", "fa fa-bicycle", "fa fa-bomb"];
 const deck = document.querySelector('.deck');
 const restart = document.querySelector('.restart');
-const stars = document.querySelector('.fa-stars');
 const moves = document.querySelector('.moves');
 const scoreEl = document.querySelector('.score');
 let score = 10000;
@@ -107,8 +106,8 @@ function checkCard(evt) {
                 flippedCards[0].className = "card show mismatch";
                 flippedCards[1].className = "card show mismatch";
                 setTimeout(function () {
-                    flippedCards[0].className = "card"
-                    flippedCards[1].className = "card"
+                    flippedCards[0].className = "card";
+                    flippedCards[1].className = "card";
                     flippedCards = [];
                     counter = 0;
                 }, 800);
@@ -154,7 +153,7 @@ function scoringSystem() {
                 }
             }
         }
-    }, 1000)
+    }, 1000);
 }
 /*
  * set up the event listener for a card. If a card is clicked:
