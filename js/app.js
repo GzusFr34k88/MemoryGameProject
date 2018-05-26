@@ -147,8 +147,14 @@ function scoringSystem() {
         scoreEl.textContent = score;
         if (matchedCounter === 8) {
             clearInterval(startScoring);
-            alert("You won with " + moveCounter + " moves! You got " + currentStars +  " stars and scored " + score + " points!");
-            document.location.reload();
+            if(currentStars > 1) {
+                alert("You won with " + moveCounter + " moves! You got " + currentStars + " stars and scored " + score + " points!");
+                document.location.reload();
+            }
+            else {
+                alert("You won with " + moveCounter + " moves! You got " + currentStars + " star and scored " + score + " points!");
+                document.location.reload();
+            }
         }
     }, 1000)
 }
