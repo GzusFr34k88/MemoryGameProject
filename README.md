@@ -7,11 +7,18 @@
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+### Download
+To download this game, click the green "Clone or download" button. From there you can use 
+``git clone https://github.com/GzusFr34k88/MemoryGameProject.git MemoryGameProject``
+or
+You can click "download ZIP"
+    If you download the zip folder, you'll have to unzip the folder. Then you can open the index.html file in your web browser to start playing
+### To Play:
+To play that game, simply tap or click on a card. This will flip over the card showing you a symbol. You're objective is to find and match all of the cards. If you want to start over, press the restart button. You'll start with 10000 points and it will decrease by 50 every second. Better hurry to get the best score possible!
 
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+### Dependencies
+Google Coda Font
+Font Awesome library
 
 ## Contributing
 
