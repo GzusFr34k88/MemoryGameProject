@@ -22,6 +22,7 @@ let counter = 0;
 let flippedCards = [];
 let scoreActive = false;
 let matchedCounter = 0;
+let currentStars = 3;
 
 /*
  * Display the cards on the page
@@ -130,9 +131,11 @@ function moveNumbers() {
 function stats() {
     if (moveCounter === 10) {
         document.querySelector('#star-3').className = "fa fa-star-o";
+        currentStars --;
     }
     if (moveCounter === 15) {
         document.querySelector('#star-2').className = "fa fa-star-o";
+        currentStars--;
     }
 }
 
@@ -144,6 +147,8 @@ function scoringSystem() {
         scoreEl.textContent = score;
         if (matchedCounter === 8) {
             clearInterval(startScoring);
+            alert("You won with " + moveCounter + " moves! You got " + currentStars +  " stars and scored " + score + " points!");
+            document.location.reload();
         }
     }, 1000)
 }
