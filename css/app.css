@@ -21,6 +21,94 @@ body {
     font-family: 'Coda', cursive;
 }
 
+.fa-star {
+    color: gold;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    margin: 20% auto;
+    width: 70%;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 35px;
+    animation-name: modalOpen;
+    animation-duration: .8s;
+    
+}
+
+.modal-header h2 {
+    margin: 0;
+    text-align: center;
+}
+
+.winMessage {
+    text-align: center;
+}
+
+.modal-header {
+    padding: 15px;
+}
+
+.modal-body {
+    padding: 10px 20px;
+    text-align: center;
+    margin: 0;
+}
+
+.modal-body .stars li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 25px;
+}
+
+.stars {
+    margin-right: 15px;
+}
+
+.modal-footer {
+    margin: 0 auto;
+    text-align: center;
+    padding-bottom: .5em;
+}
+.tryAgainBtn {
+    background: rgb(43, 184, 240);
+    color: black;
+    padding: 1em 2em;
+    font-size: 1em;
+    border: 1px solid black;
+    border-radius: 50px;
+    border-style: 1px solid black;
+
+}
+
+.closeBtn {
+    color: #fff;
+    float: right;
+    font-size: 30px;
+}
+
+.closeBtn:hover, .closeBtn.focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@keyframes modalOpen {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
 @media screen and (min-width: 320px) and (max-width: 376px) {
     .container {
         display: flex;

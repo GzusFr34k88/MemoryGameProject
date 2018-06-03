@@ -6,6 +6,9 @@ let deckStructure = ["fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa
     "fa fa-cube", "fa fa-leaf", "fa fa-bicycle", "fa fa-bomb"];
 const deck = document.querySelector('.deck');
 const restart = document.querySelector('.restart');
+const tryAgainBtn = document.querySelector('.tryAgainBtn');
+const closeBtn = document.querySelector('.closeBtn');
+const modal = document.querySelector('.modal');
 const moves = document.querySelector('.moves');
 const scoreEl = document.querySelector('.score');
 let score = 10000;
@@ -40,6 +43,7 @@ function shuffle(array) {
 
 reset();
 function reset() {
+    closeModal();
     counter = 0;
     moveCounter = 0;
     moves.textContent = 0;
@@ -121,11 +125,11 @@ function moveNumbers() {
 }
 
 function stats() {
-    if (moveCounter === 10) {
+    if (moveCounter === 20) {
         document.querySelector('#star-3').className = "fa fa-star-o";
         currentStars --;
     }
-    if (moveCounter === 15) {
+    if (moveCounter === 25) {
         document.querySelector('#star-2').className = "fa fa-star-o";
         currentStars--;
     }
@@ -142,18 +146,26 @@ function scoringSystem() {
         }
         if (matchedCounter === 8) {
             clearInterval(startScoring);
-            if(currentStars > 1) {
-                if (window.confirm("You won with " + moveCounter + " moves! You got " + currentStars + " stars and scored " + score + " points! Press Ok if you want to play again.")) {
-                    reset();
-                }
+            modal.style.display = "block";
+            const temp = document.createDocumentFragment();
+            const modalBody = document.querySelector('.modal-body');
+            let star = document.createElement('li');
+            let starsList = document.createElement('ul');
+            star.className = "fa fa-star";
+            for (let i = 0; i <= currentStars; i++) {
+                starsList.appendChild(star);
             }
-            else {
-                if (window.confirm("You won with " + moveCounter + " moves! You got " + currentStars + " star and scored " + score + " points! Press Ok if you want to play again.")){
-                    reset();
-                }
-            }
+            let message = document.createElement('p');
+            message.textContent = "You got";
+            temp.appendChild(message);
+            temp.appendChild(starsList);
+            modalBody.appendChild(temp);
         }
     }, 1000);
+}
+
+function closeModal() {
+    modal.style.display = 'none';
 }
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -167,3 +179,27 @@ function scoringSystem() {
  */
 deck.addEventListener('click', flipCard, false);
 restart.addEventListener('click', reset, false);
+tryAgainBtn.addEventListener('click', reset, false);
+closeBtn.addEventListener('click', closeModal, false);
+function addStarsModal() {
+    modal.style.display = "block";
+    const temp = document.createDocumentFragment();
+    const modalBody = document.querySelector('.modal-body');
+    let star = document.createElement('li');
+    let starsList = document.createElement('ul');
+    starsList.className = "star";
+    star.className = "fa fa-star";
+    if (currentStars === 3){
+        for (let i = 0; i < 3; i++) {
+            starsList.appendChild(star);
+            console.log("You got 3 stars");
+        }
+        let message = document.createElement('p');
+        message.textContent = "You got";
+        temp.appendChild(message);
+        temp.appendChild(starsList);
+        console.log(starsList);
+        modalBody.appendChild(temp);
+    }
+}
+addStarsModal();
