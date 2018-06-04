@@ -9,6 +9,7 @@ const restart = document.querySelector('.restart');
 const tryAgainBtn = document.querySelector('.tryAgainBtn');
 const closeBtn = document.querySelector('.closeBtn');
 const modal = document.querySelector('.modal');
+const modalBody = document.querySelector('.modal-body');
 const moves = document.querySelector('.moves');
 const scoreEl = document.querySelector('.score');
 let score = 10000;
@@ -55,6 +56,10 @@ function reset() {
     document.querySelector('#star-3').className = 'fa fa-star';
     document.querySelector('#star-2').className = 'fa fa-star';
     flippedCards = [];
+    while (modalBody.firstChild) {
+        console.log(modalBody.firstChild);
+        modalBody.removeChild(modalBody.firstChild);
+    }
     while (deck.firstChild) {
         deck.removeChild(deck.firstChild);
     }
@@ -125,11 +130,11 @@ function moveNumbers() {
 }
 
 function stats() {
-    if (moveCounter === 20) {
+    if (moveCounter === 15) {
         document.querySelector('#star-3').className = "fa fa-star-o";
         currentStars --;
     }
-    if (moveCounter === 25) {
+    if (moveCounter === 20) {
         document.querySelector('#star-2').className = "fa fa-star-o";
         currentStars--;
     }
@@ -148,17 +153,44 @@ function scoringSystem() {
             clearInterval(startScoring);
             modal.style.display = "block";
             const temp = document.createDocumentFragment();
-            const modalBody = document.querySelector('.modal-body');
-            let star = document.createElement('li');
             let starsList = document.createElement('ul');
-            star.className = "fa fa-star";
-            for (let i = 0; i <= currentStars; i++) {
+            starsList.className = "modalStars";
+            if (currentStars === 3) {
+                console.log("current stars is 3");
+                for (let i = 0; i < currentStars; i++) {
+                    let star = document.createElement('li');
+                    star.className = "fa fa-star";
+                    starsList.appendChild(star);
+                }
+            }
+            if (currentStars === 2) {
+                console.log("current stars is 2");
+                for (let i = 0; i < currentStars; i++) {
+                    let star = document.createElement('li');
+                    star.className = "fa fa-star";
+                    starsList.appendChild(star);
+                }
+                let star = document.createElement('li');
+                star.className = "fa fa-star-o";
                 starsList.appendChild(star);
+            }
+            if (currentStars === 1) {
+                let star = document.createElement('li');
+                star.className = "fa fa-star";
+                starsList.appendChild(star);
+                for (let i = 0; i < 2; i++) {
+                    let star = document.createElement('li');
+                    star.className = "fa fa-star-o";
+                    starsList.appendChild(star);
+                }
             }
             let message = document.createElement('p');
             message.textContent = "You got";
             temp.appendChild(message);
             temp.appendChild(starsList);
+            let scoreMessage = document.createElement('p');
+            scoreMessage.textContent = "You scored: " + score + " points";
+            temp.appendChild(scoreMessage);
             modalBody.appendChild(temp);
         }
     }, 1000);
@@ -181,25 +213,3 @@ deck.addEventListener('click', flipCard, false);
 restart.addEventListener('click', reset, false);
 tryAgainBtn.addEventListener('click', reset, false);
 closeBtn.addEventListener('click', closeModal, false);
-function addStarsModal() {
-    modal.style.display = "block";
-    const temp = document.createDocumentFragment();
-    const modalBody = document.querySelector('.modal-body');
-    let star = document.createElement('li');
-    let starsList = document.createElement('ul');
-    starsList.className = "star";
-    star.className = "fa fa-star";
-    if (currentStars === 3){
-        for (let i = 0; i < 3; i++) {
-            starsList.appendChild(star);
-            console.log("You got 3 stars");
-        }
-        let message = document.createElement('p');
-        message.textContent = "You got";
-        temp.appendChild(message);
-        temp.appendChild(starsList);
-        console.log(starsList);
-        modalBody.appendChild(temp);
-    }
-}
-addStarsModal();
